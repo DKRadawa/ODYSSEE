@@ -1,4 +1,4 @@
-M1=readmatrix('test.csv')      %Importation du fichier csv dans une matrice
+M1=readmatrix('20Hz.csv')      %Importation du fichier csv dans une matrice
 
 Fe=200;                         %Frequence d'echantillonage, frequence de l'accelerometre
 Te=1/Fe;
