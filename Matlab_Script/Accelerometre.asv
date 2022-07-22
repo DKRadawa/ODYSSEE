@@ -1,0 +1,20 @@
+% M1=readmatrix('test.csv');      %Importation du fichier csv dans une matrice
+
+Fe=200;
+Te=1/Fe;
+N=100;
+
+t = [0:(N-1)]*Te;             % temps (part de 0, avance de Te en Te, et contient N points
+
+y=sin((2*pi*30*t)+pi/2);
+
+Freq = [0:N-1]/(N*Te);           %l'espace des fréquences
+%représentation fréquentielle
+subplot(2,1,1)
+plot(t,y) 
+% xlim([0 10000])% on se limitte aux fréquences <10 kHz
+
+subplot(2,1,2)
+plot(Freq, abs(fft(y)),'k') % tracé de l'amplitude en fonction de la fréquence
+
+
