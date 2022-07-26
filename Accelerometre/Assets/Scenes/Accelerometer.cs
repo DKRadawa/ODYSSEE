@@ -1,53 +1,61 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using System.IO;
 using UnityEngine.UI;
+using System;
+using System.Linq;
+
 
 public class Accelerometer : MonoBehaviour
 {
-    [SerializeField] public List<float> dataAccX = new List<float>();
-    [SerializeField] public List<float> dataAccY = new List<float>();
-    [SerializeField] public List<float> dataAccZ = new List<float>();
+    public class Mesure
+    {
+        public float Time { get; set; }
+        public double dataX { get; set; }
+        public double dataY { get; set; }
+        public double dataZ { get; set; }
+        public double module { get; set; }
+    }
+
+    [SerializeField] public List<Mesure> dataAcc = new List<Mesure>();
 
     [SerializeField] public bool clickStart;
-    [SerializeField] public string NameX;
-    [SerializeField] public string NameY;
-    [SerializeField] public string NameZ;
+    [SerializeField] public string nameFile;
+    [SerializeField] public string Date;
 
-    public GameObject inputFieldX;
-    public GameObject inputFieldY;
-    public GameObject inputFieldZ;
-    
-    private string separator = ";";
+    [SerializeField] public bool timeBegin;
+    [SerializeField] public float timeStart;
 
-     public void StartAcc()
+    public GameObject inputFieldName;
+    public GameObject inputFieldDate;
+
+    public void StartAcc()
     {
         clickStart = true;
+        timeBegin = true;
     }
+
+
 
     public void StopAcc()
     {
         clickStart = false;
-        NameX = inputFieldX.GetComponent<Text>().text;
-        NameY = inputFieldY.GetComponent<Text>().text;
-        NameZ = inputFieldZ.GetComponent<Text>().text;
 
-        string saveStringX = string.Join(separator, dataAccX);
-        File.WriteAllText(Application.dataPath + "/" + NameX, saveStringX);
-        Debug.Log("Sauvegarde de X");
+        nameFile = inputFieldName.GetComponent<Text>().text;
+        Date = inputFieldDate.GetComponent<Text>().text;
 
-        string saveStringY = string.Join(separator, dataAccY);
-        File.WriteAllText(Application.dataPath + "/" + NameY, saveStringY);
-        Debug.Log("Sauvegarde de Y");
+        string headerLine = string.Join(";", dataAcc.GetType().GetProperties().Select(p=>p.Name));
+        var dataLines = from mes in dataAcc
+                        let dataLine = string.Join(";", mes.GetType().GetProperties().Select(p => p.GetValue(mes)))
+                        select dataLine;
+        var csvData = new List<string>();
+        csvData.Add(headerLine);
+        csvData.AddRange(dataLines);
 
-        string saveStringZ = string.Join(separator, dataAccZ);
-        File.WriteAllText(Application.dataPath + "/" + NameZ, saveStringZ);
-        Debug.Log("Sauvegarde de Z");
+        System.IO.File.WriteAllLines(Application.dataPath + "/" + nameFile + Date + ".csv", csvData);
 
-        dataAccX.Clear();
-        dataAccY.Clear();
-        dataAccZ.Clear();
+
+        dataAcc.Clear();
+ 
         Debug.Log("Reset des tableaux");
     }
 
@@ -58,13 +66,27 @@ public class Accelerometer : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+     void Update()
     {
         if (clickStart==true)
         {
-            dataAccX.Add(Input.acceleration.x);
-            dataAccY.Add(Input.acceleration.y);
-            dataAccZ.Add(Input.acceleration.z);
+            if (timeBegin==true)
+            {
+                timeStart = Time.time;
+                timeBegin = false;
+            }
+            double x = Input.acceleration.x;
+            double y = Input.acceleration.y;
+            double z = Input.acceleration.z;
+            
+            dataAcc.Add(new Mesure
+            {
+                Time = (Time.time-timeStart)+Time.deltaTime,
+                dataX= x,
+                dataY= y,
+                dataZ= z,
+                module= Math.Sqrt(x*x+y*y+z*z)
+            }) ;
         }
         
     }
