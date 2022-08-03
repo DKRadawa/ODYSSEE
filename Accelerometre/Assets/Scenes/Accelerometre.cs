@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using System;
 using System.Linq;
 using UnityEngine.InputSystem;
+using TMPro;
 
 
 public class Accelerometre : MonoBehaviour
@@ -15,27 +16,28 @@ public class Accelerometre : MonoBehaviour
         public double module { get; set; }
     }
 
-    [SerializeField] public List<Mesure> dataAcc = new List<Mesure>();
+    private List<Mesure> listDataAcc;
 
-    [SerializeField] public bool clickStart;
-    [SerializeField] public string nameFile;
+    private bool clickStart;
+    private string fileCustomName;
+    private string fileDateName;
+    private float timeStart;
 
-    [SerializeField] public bool timeBegin;
-    [SerializeField] public float timeStart;
 
-    public Text realtimeValue;
-    public Text frequence;
-    public Text frequenceModif;
+    [SerializeField]
+    private TextMeshProUGUI inputFieldName;
 
-    public GameObject inputFieldName;
+    [SerializeField]
+    private TextMeshProUGUI resultMessageText;
 
     public void StartAcc()
     {
         clickStart = true;
-        timeBegin = true;
-        InputSystem.DisableDevice(Accelerometer.current);
-        Accelerometer.current.samplingFrequency=10;      
-        InputSystem.EnableDevice(Accelerometer.current);
+        timeStart = Time.time;
+
+        //Name Date management
+        fileDateName = DateTime.Now.ToShortTimeString();
+        Debug.Log(fileDateName);
     }
 
 
@@ -44,33 +46,42 @@ public class Accelerometre : MonoBehaviour
     {
         clickStart = false;
 
-        nameFile = inputFieldName.GetComponent<Text>().text;
-       
+        //Name Management
+        fileCustomName = inputFieldName.text;
+        if (fileCustomName == "​")
+        {
+            fileCustomName = "Test";
+        }
 
-        string headerLine = string.Join(";", dataAcc.GetType().GetProperties().Select(p=>p.Name));
-        var dataLines = from mes in dataAcc
-                        let dataLine = string.Join(";", mes.GetType().GetProperties().Select(p => p.GetValue(mes)))
-                        select dataLine;
-        var csvData = new List<string>();
+
+        //Fill with data
+        List<string> csvData = new();
+        string headerLine = "Time;Accelerometer Module";
         csvData.Add(headerLine);
-        csvData.AddRange(dataLines);
 
-        System.IO.File.WriteAllLines(Application.persistentDataPath + "/" + nameFile + ".csv", csvData);
+        foreach (Mesure item in listDataAcc)
+        {
+            csvData.Add(string.Join(";", item.Time, item.module));
+        }
+
+       /* var dataLines = from mes in listDataAcc
+                        let dataLine = string.Join(";", mes.GetType().GetProperties().Select(p => p.GetValue(mes)))
+                        select dataLine;*/
 
 
-        dataAcc.Clear();
- 
-        Debug.Log("Reset des tableaux");
+        System.IO.File.WriteAllLines(Application.persistentDataPath + "/" + fileCustomName + "_" + fileDateName+  ".csv", csvData);
+        resultMessageText.text = "File save at " + Application.persistentDataPath + "/" + fileCustomName + "_" + fileDateName + ".csv";
+        Debug.Log("File save at" + Application.persistentDataPath + "/" + fileCustomName + "_" + fileDateName + ".csv");
+        listDataAcc.Clear();
     }
 
 
     private void Start()
     {
         clickStart = false;
- 
+        listDataAcc = new();
+        fileCustomName = "";
         InputSystem.EnableDevice(Accelerometer.current);
-        float freq= Accelerometer.current.samplingFrequency;
-        frequence.text = freq.ToString();
     }
 
     // Update is called once per frame
@@ -79,24 +90,15 @@ public class Accelerometre : MonoBehaviour
 
         if (clickStart==true)
         {
-            if (timeBegin==true)
-            {
-                timeStart = Time.time;
-                timeBegin = false;
-            }
-
             Vector3 valueAcc= Accelerometer.current.acceleration.ReadValue();
 
-            dataAcc.Add(new Mesure
+            listDataAcc.Add(new Mesure
             {
                 Time = (Time.time - timeStart) + Time.deltaTime,
                 data = valueAcc,
                 module = Vector3.Magnitude(valueAcc)
             });
 
-            realtimeValue.text = valueAcc.ToString();
-            float freqModif = Accelerometer.current.samplingFrequency;
-            frequenceModif.text = freqModif.ToString();
         }
         
     }
