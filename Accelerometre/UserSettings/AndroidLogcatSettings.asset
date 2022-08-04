@@ -3,39 +3,69 @@
     "m_SelectedPackage": {
         "deviceId": "1015fa9013de0e05",
         "name": "com.DefaultCompany.Accelerometre",
-        "processId": 22216,
+        "processId": 19066,
         "exited": false
     },
     "m_SelectedPriority": 0,
     "m_KnownPackagesForSerialization": [
         {
             "deviceId": "1015fa9013de0e05",
-            "name": "com.DefaultCompany.com.unity.template.mobile2D",
-            "processId": 17239,
-            "exited": false
+            "name": "com.DefaultCompany.Accelerometre",
+            "processId": 4434,
+            "exited": true
         },
         {
             "deviceId": "1015fa9013de0e05",
-            "name": "com.DefaultCompany.com.unity.template.mobile2D",
-            "processId": 10851,
-            "exited": false
+            "name": "com.DefaultCompany.Accelerometre",
+            "processId": 6074,
+            "exited": true
         },
         {
             "deviceId": "1015fa9013de0e05",
-            "name": "com.DefaultCompany.com.unity.template.mobile2D",
-            "processId": 15952,
-            "exited": false
+            "name": "com.DefaultCompany.Accelerometre",
+            "processId": 7523,
+            "exited": true
         },
         {
             "deviceId": "1015fa9013de0e05",
-            "name": "com.DefaultCompany.com.unity.template.mobile2D",
-            "processId": 19044,
+            "name": "com.sec.android.app.launcher",
+            "processId": 10723,
             "exited": false
         },
         {
             "deviceId": "1015fa9013de0e05",
             "name": "com.DefaultCompany.Accelerometre",
-            "processId": 22216,
+            "processId": 9206,
+            "exited": true
+        },
+        {
+            "deviceId": "1015fa9013de0e05",
+            "name": "com.DefaultCompany.Accelerometre",
+            "processId": 11638,
+            "exited": false
+        },
+        {
+            "deviceId": "1015fa9013de0e05",
+            "name": "com.DefaultCompany.Accelerometre",
+            "processId": 13502,
+            "exited": false
+        },
+        {
+            "deviceId": "1015fa9013de0e05",
+            "name": "com.DefaultCompany.Accelerometre",
+            "processId": 15302,
+            "exited": false
+        },
+        {
+            "deviceId": "1015fa9013de0e05",
+            "name": "com.DefaultCompany.Accelerometre",
+            "processId": 17207,
+            "exited": false
+        },
+        {
+            "deviceId": "1015fa9013de0e05",
+            "name": "com.DefaultCompany.Accelerometre",
+            "processId": 19066,
             "exited": false
         },
         {
