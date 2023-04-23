@@ -6,6 +6,7 @@ using System.Linq;
 using UnityEngine.InputSystem;
 using System.Collections;
 using TMPro;
+using System.IO;
 
 
 public class Accelerometre : MonoBehaviour
@@ -62,12 +63,22 @@ public class Accelerometre : MonoBehaviour
         timeStart = Time.time;
 
         InputSystem.EnableDevice(Accelerometer.current);
+        try
+        {
+            Accelerometer.current.samplingFrequency = 100;
+        }
+        catch(Exception e)
+        {
+            Debug.LogError("Exception = " + e.Message);
+        }
+        
+   
         StartCoroutine(Tempo());
 
         enduranceMode = enduranceModeToggle.isOn;
 
         //Name Date management
-        fileDateName = DateTime.Now.ToShortTimeString();
+        fileDateName = DateTime.Now.Hour.ToString() + "_" + DateTime.Now.Minute.ToString();
         Debug.Log(fileDateName);
 
         if (enduranceMode)
@@ -83,7 +94,7 @@ public class Accelerometre : MonoBehaviour
     {
         clickStart = false;
         StopAllCoroutines();
-
+        Debug.Log("Sampling Value = "  + Accelerometer.current.samplingFrequency.ToString());
         //Name Management
         fileCustomName = inputFieldName.text;
         if (fileCustomName == "Name​")
@@ -91,27 +102,8 @@ public class Accelerometre : MonoBehaviour
             fileCustomName = "Test";
         }
 
-
-        //Fill with data
-        List<string> csvData = new();
-        string headerLine = "Time;Accelerometer Module";
-        csvData.Add(headerLine);
-
-        foreach (Mesure item in listDataAcc)
-        {
-            csvData.Add(string.Join(";", item.Time, item.module));
-        }
-
-        /* var dataLines = from mes in listDataAcc
-                         let dataLine = string.Join(";", mes.GetType().GetProperties().Select(p => p.GetValue(mes)))
-                         select dataLine;*/
-
-
-        System.IO.File.WriteAllLines(Application.persistentDataPath + "/" + fileCustomName + "_" + fileDateName + ".csv", csvData);
-        resultMessageText.text = "File save at " + Application.persistentDataPath + "/" + fileCustomName + "_" + fileDateName + ".csv";
-        Debug.Log("File save at" + Application.persistentDataPath + "/" + fileCustomName + "_" + fileDateName + ".csv");
-        listDataAcc.Clear();
-
+        SaveFileAndClear();
+        
     }
 
     public void Refresh()
@@ -161,28 +153,28 @@ public class Accelerometre : MonoBehaviour
                 Time = (Time.time - timeStart) + Time.deltaTime,
                 data = valueAcc,
                 module = _module
-            }); ;
+            }); 
 
 
             //Endurance Mode
-            if (valueAcc.magnitude > maximumTotalValue)
+            if (_module > maximumTotalValue)
             {
                 maximumTotalValue = _module;
             }
 
-            if (valueAcc.magnitude < minimumTotalValue)
+            if (_module < minimumTotalValue)
             {
                 minimumTotalValue = _module;
             }
 
 
 
-            if (valueAcc.magnitude > maximumOneMinuteValue)
+            if (_module > maximumOneMinuteValue)
             {
                 maximumOneMinuteValue = _module;
             }
 
-            if (valueAcc.magnitude < minimumOneMinuteValue)
+            if (_module < minimumOneMinuteValue)
             {
                 minimumOneMinuteValue = _module;
             }
@@ -193,13 +185,8 @@ public class Accelerometre : MonoBehaviour
 
     }
 
-    private IEnumerator ChronoResetOneMinute()
+    private void SaveFileAndClear()
     {
-        yield return new WaitForSeconds(60);
-        minimumOneMinuteValue = 1f;
-        maximumOneMinuteValue = 1f;
-        StartCoroutine(ChronoResetOneMinute());
-
         //Fill with data
         List<string> csvData = new();
         string headerLine = "Time;Accelerometer Module";
@@ -209,10 +196,38 @@ public class Accelerometre : MonoBehaviour
         {
             csvData.Add(string.Join(";", item.Time, item.module));
         }
-        System.IO.File.WriteAllLines(Application.persistentDataPath + "/" + fileCustomName + "_" + fileDateName + ".csv", csvData);
-        resultMessageText.text = "File save at " + Application.persistentDataPath + "/" + fileCustomName + "_" + fileDateName + ".csv";
-        Debug.Log("File save at" + Application.persistentDataPath + "/" + fileCustomName + "_" + fileDateName + ".csv");
+
+        /* var dataLines = from mes in listDataAcc
+                         let dataLine = string.Join(";", mes.GetType().GetProperties().Select(p => p.GetValue(mes)))
+                         select dataLine;*/
+
+        //string pathSave = "/storage/emulated/0/Android/Appli_test"; //instead of Application.dataPath 
+        
+        string pathSave = Application.persistentDataPath;
+
+        System.IO.File.WriteAllLines(pathSave + "/" + fileCustomName + "_" + fileDateName + ".csv", csvData);
+        resultMessageText.text = "File save at " + pathSave + "/" + fileCustomName + "_" + fileDateName + ".csv";
+        Debug.Log("File save at " + pathSave + "/" + fileCustomName + "_" + fileDateName + ".csv");
+
+
+        //Write some text to the test.txt file
+        /*StreamWriter writer = new StreamWriter(pathSave + "/" + fileCustomName + "_" + fileDateName + ".csv", true);
+        writer.WriteLine(csvData);
+        writer.Close();*/
+        //resultMessageText.text = "File save at " + pathSave + "/" + fileCustomName + "_" + fileDateName + ".csv";
+
+
         listDataAcc.Clear();
+    }
+
+    private IEnumerator ChronoResetOneMinute()
+    {
+        yield return new WaitForSeconds(60);
+        minimumOneMinuteValue = 1f;
+        maximumOneMinuteValue = 1f;
+        StartCoroutine(ChronoResetOneMinute());
+
+        SaveFileAndClear();
 
     }
 

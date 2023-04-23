@@ -1,9 +1,9 @@
 {
     "m_SelectedDeviceId": "1015fa9013de0e05",
     "m_SelectedPackage": {
-        "deviceId": "1015fa9013de0e05",
-        "name": "com.DefaultCompany.Accelerometre",
-        "processId": 19066,
+        "deviceId": "",
+        "name": "",
+        "processId": 0,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -11,67 +11,133 @@
         {
             "deviceId": "1015fa9013de0e05",
             "name": "com.DefaultCompany.Accelerometre",
-            "processId": 4434,
+            "processId": 22823,
             "exited": true
         },
         {
             "deviceId": "1015fa9013de0e05",
             "name": "com.DefaultCompany.Accelerometre",
-            "processId": 6074,
+            "processId": 24408,
             "exited": true
         },
         {
             "deviceId": "1015fa9013de0e05",
             "name": "com.DefaultCompany.Accelerometre",
-            "processId": 7523,
-            "exited": true
-        },
-        {
-            "deviceId": "1015fa9013de0e05",
-            "name": "com.sec.android.app.launcher",
-            "processId": 10723,
-            "exited": false
-        },
-        {
-            "deviceId": "1015fa9013de0e05",
-            "name": "com.DefaultCompany.Accelerometre",
-            "processId": 9206,
+            "processId": 25332,
             "exited": true
         },
         {
             "deviceId": "1015fa9013de0e05",
             "name": "com.DefaultCompany.Accelerometre",
-            "processId": 11638,
+            "processId": 32444,
+            "exited": true
+        },
+        {
+            "deviceId": "1015fa9013de0e05",
+            "name": "com.unity3d.mobileremote",
+            "processId": 1294,
             "exited": false
         },
         {
             "deviceId": "1015fa9013de0e05",
             "name": "com.DefaultCompany.Accelerometre",
-            "processId": 13502,
+            "processId": 2540,
             "exited": false
         },
         {
             "deviceId": "1015fa9013de0e05",
             "name": "com.DefaultCompany.Accelerometre",
-            "processId": 15302,
+            "processId": 5056,
             "exited": false
         },
         {
             "deviceId": "1015fa9013de0e05",
             "name": "com.DefaultCompany.Accelerometre",
-            "processId": 17207,
+            "processId": 13673,
             "exited": false
         },
         {
             "deviceId": "1015fa9013de0e05",
             "name": "com.DefaultCompany.Accelerometre",
-            "processId": 19066,
+            "processId": 15069,
+            "exited": false
+        },
+        {
+            "deviceId": "1015fa9013de0e05",
+            "name": "com.DefaultCompany.Accelerometre",
+            "processId": 16100,
+            "exited": false
+        },
+        {
+            "deviceId": "1015fa9013de0e05",
+            "name": "com.DefaultCompany.Accelerometre",
+            "processId": 20010,
+            "exited": false
+        },
+        {
+            "deviceId": "1015fa9013de0e05",
+            "name": "com.DefaultCompany.Accelerometre",
+            "processId": 21351,
+            "exited": false
+        },
+        {
+            "deviceId": "1015fa9013de0e05",
+            "name": "com.DefaultCompany.Accelerometre",
+            "processId": 28429,
+            "exited": false
+        },
+        {
+            "deviceId": "1015fa9013de0e05",
+            "name": "com.DefaultCompany.Accelerometre",
+            "processId": 30521,
+            "exited": false
+        },
+        {
+            "deviceId": "1015fa9013de0e05",
+            "name": "com.DefaultCompany.Accelerometre",
+            "processId": 414,
             "exited": false
         },
         {
             "deviceId": "192.168.1.11:5555",
             "name": "com.DefaultCompany.com.unity.template.mobile2D",
             "processId": 17239,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.1.11:5555",
+            "name": "com.DefaultCompany.Accelerometre",
+            "processId": 22823,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.1.11:5555",
+            "name": "com.DefaultCompany.Accelerometre",
+            "processId": 25332,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.1.11:5555",
+            "name": "com.DefaultCompany.Accelerometre",
+            "processId": 32444,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.1.11:5555",
+            "name": "com.unity3d.mobileremote",
+            "processId": 1294,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.1.11:5555",
+            "name": "com.DefaultCompany.Accelerometre",
+            "processId": 21351,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.1.11:5555",
+            "name": "com.DefaultCompany.Accelerometre",
+            "processId": 28429,
             "exited": false
         },
         {
